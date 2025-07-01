@@ -89,3 +89,93 @@
 .fields {
   margin-top: 1.5rem;
 }
+
+/* Estilos para o campo de cláusulas */
+.clausulas-container {
+  margin-top: 0.7rem;
+}
+
+.clausula-item {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+}
+
+.clausula-item textarea {
+  flex: 1;
+  min-height: 80px;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d0d7de;
+  font-size: 1.05em;
+  background: #fff;
+  color: #222;
+  box-sizing: border-box;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.4;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.clausula-item textarea:focus {
+  outline: none;
+  border-color: #0074d9;
+  box-shadow: 0 0 0 2px rgba(0, 116, 217, 0.1);
+}
+
+.clausula-item textarea::placeholder {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.clausula-remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.1s;
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clausula-remove-btn:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.clausula-remove-btn:active {
+  transform: translateY(0);
+}
+
+.clausula-add-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  transition: background-color 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.clausula-add-btn:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.clausula-add-btn:active {
+  transform: translateY(0);
+}
