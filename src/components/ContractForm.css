@@ -1,0 +1,91 @@
+.contract-form {
+  max-width: 1100px;
+  margin: 2.5rem auto 2rem auto;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px 0 #e5e7eb;
+  padding: 2.5rem 2rem 2rem 2rem;
+  font-family: inherit;
+}
+.contract-form h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #222;
+  font-weight: 700;
+}
+.personalizado-section {
+  background: #f6f8fa;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.8rem;
+  margin: 2rem 0 2.5rem 0;
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+  box-shadow: 0 1px 6px 0 #f0f1f3;
+}
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 1.2rem;
+}
+.field {
+  margin-bottom: 1.3rem;
+}
+.input {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d0d7de;
+  font-size: 1.05em;
+  background: #fff;
+  color: #222;
+  box-sizing: border-box;
+}
+.checkbox-columns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.7rem;
+}
+.checkbox-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+  font-weight: 500;
+}
+.checkbox-field:hover, .checkbox-field:focus-within {
+  background: #f0f4fa;
+}
+.checkbox-field input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #0074d9;
+  margin-right: 4px;
+}
+.preview-area {
+  margin-top: 2.5rem;
+  background: #f8fafc;
+  border-radius: 0.7rem;
+  padding: 1.2rem 1rem 1.5rem 1rem;
+  box-shadow: 0 1px 6px 0 #f0f1f3;
+}
+.preview-area h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 1rem;
+}
+.fields {
+  margin-top: 1.5rem;
+}

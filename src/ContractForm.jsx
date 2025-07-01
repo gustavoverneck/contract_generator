@@ -6,38 +6,67 @@ import PdfStyleSelector from './components/PdfStyleSelector';
 import { formatField } from './utils/FieldFormatter';
 import './components/TemplateSelector.css';
 import './components/PdfStyleSelector.css';
+import './components/ContractForm.css';
+
+// Lista de todos os campos possíveis para o modo personalizado
+const ALL_FIELDS = [
+  { nome: 'nome', label: 'Nome', tipo: 'text' },
+  { nome: 'cpf', label: 'CPF', tipo: 'cpf' },
+  { nome: 'cnpj', label: 'CNPJ', tipo: 'cnpj' },
+  { nome: 'email', label: 'E-mail', tipo: 'email' },
+  { nome: 'descricao', label: 'Descrição', tipo: 'textarea' },
+  { nome: 'clausulas', label: 'Cláusulas', tipo: 'clausulas' },
+  { nome: 'valor', label: 'Valor', tipo: 'money' },
+  { nome: 'data', label: 'Data', tipo: 'date' },
+  // Adicione outros campos conforme necessário
+];
 
 export default function ContractForm() {
-  const templates = TemplateService.getTemplates();
+  // Adiciona a opção personalizado na lista de templates
+  const templates = [
+    ...TemplateService.getTemplates(),
+    { id: 'personalizado', nome: 'Personalizado', campos: [], xmlBase: '<contrato>{campos}</contrato>' }
+  ];
   const [selectedId, setSelectedId] = useState(templates[0].id);
   const [fields, setFields] = useState({});
   const [pdfUrl, setPdfUrl] = useState(null);
   const [pdfStyle, setPdfStyle] = useState(PDF_STYLES[0].id);
   const [clausulas, setClausulas] = useState(['']);
+  const [customFields, setCustomFields] = useState([]);
+  const [customTitle, setCustomTitle] = useState('');
 
-  const template = TemplateService.getTemplateById(selectedId);
+  const template = templates.find(t => t.id === selectedId);
+  const isPersonalizado = selectedId === 'personalizado';
+  const camposParaExibir = isPersonalizado ? customFields : template.campos;
 
   useEffect(() => {
     const initial = {};
-    template.campos.forEach(c => { initial[c.nome] = ''; });
+    (camposParaExibir || []).forEach(c => { initial[c.nome] = ''; });
     setFields(initial);
     setClausulas(['']);
     setPdfUrl(null);
-  }, [selectedId]);
+    setCustomTitle('');
+  }, [selectedId, customFields]);
 
   function gerarPdfPreview(e) {
     e && e.preventDefault();
     let campos = { ...fields };
-    if (template.campos.some(c => c.nome === 'descricao')) {
+    if (camposParaExibir.some(c => c.nome === 'descricao')) {
       campos['descricao'] = fields['descricao'] || '';
     }
-    if (template.campos.some(c => c.nome === 'clausulas')) {
+    if (camposParaExibir.some(c => c.nome === 'clausulas')) {
       campos['clausulas'] = clausulas.filter(Boolean).map((c, i) => `Cláusula ${i + 1}: ${c}`).join('\n');
     }
-    template.campos.forEach(c => {
+    (camposParaExibir || []).forEach(c => {
       if (c.opcional && !campos[c.nome]) campos[c.nome] = '';
     });
-    const xml = TemplateService.fillTemplateXml(template.xmlBase, campos);
+    // Geração do XML base para personalizado
+    let xml;
+    if (isPersonalizado) {
+      xml = `<contrato>\n  <titulo>${customTitle || 'Contrato'}</titulo>\n` + camposParaExibir.map(c => `<${c.nome}>${campos[c.nome] || ''}</${c.nome}>`).join('\n') + '\n</contrato>';
+    } else {
+      xml = TemplateService.fillTemplateXml(template.xmlBase, campos);
+    }
     const doc = PdfService.generatePdfFromXml(xml, pdfStyle);
     const pdfBlob = doc.output('blob');
     setPdfUrl(URL.createObjectURL(pdfBlob));
@@ -47,7 +76,7 @@ export default function ContractForm() {
     const { name, value, maxLength, type } = e.target;
     let val = value;
     // Formatação automática
-    const campo = template.campos.find(c => c.nome === name);
+    const campo = (camposParaExibir || []).find(c => c.nome === name);
     if (campo && ['cpf', 'cnpj', 'tel', 'money', 'date'].includes(campo.tipo)) {
       val = formatField(campo.tipo, value);
     }
@@ -83,6 +112,52 @@ export default function ContractForm() {
           selectedId={selectedId}
           onSelect={setSelectedId}
         />
+        {isPersonalizado && (
+          <section className="personalizado-section">
+            <div className="section-title">Personalização do Contrato</div>
+            <div className="field">
+              <label htmlFor="customTitle">Título do Contrato:</label>
+              <input
+                id="customTitle"
+                type="text"
+                className="input"
+                value={customTitle}
+                onChange={e => setCustomTitle(e.target.value)}
+                placeholder="Digite o título do contrato"
+                maxLength={80}
+                autoComplete="off"
+              />
+            </div>
+            <div className="field">
+              <label style={{marginBottom:8,display:'block'}}>Escolha os campos do seu contrato:</label>
+              <div className="checkbox-columns">
+                {[0,1,2].map(col => (
+                  <div key={col} className="checkbox-col">
+                    {ALL_FIELDS.filter((_,i)=>i%3===col).map(f => (
+                      <label
+                        key={f.nome}
+                        className="checkbox-field"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={customFields.some(cf => cf.nome === f.nome)}
+                          onChange={e => {
+                            if (e.target.checked) {
+                              setCustomFields([...customFields, f]);
+                            } else {
+                              setCustomFields(customFields.filter(cf => cf.nome !== f.nome));
+                            }
+                          }}
+                        />
+                        {f.label}
+                      </label>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
         <label>Estilo do PDF:</label>
         <PdfStyleSelector
           styles={PDF_STYLES}
@@ -90,7 +165,7 @@ export default function ContractForm() {
           onSelect={setPdfStyle}
         />
         <div className="fields">
-          {template.campos.map(campo => {
+          {(camposParaExibir || []).map(campo => {
             const obrigatorio = !campo.opcional;
             const maxLength = campo.tipo === 'textarea' ? 600 : campo.tipo === 'text' ? 120 : campo.tipo === 'cpf' ? 14 : campo.tipo === 'cnpj' ? 18 : campo.tipo === 'tel' ? 15 : campo.tipo === 'money' ? 20 : campo.tipo === 'email' ? 80 : campo.tipo === 'number' ? 12 : undefined;
             if (campo.tipo === 'textarea') {
