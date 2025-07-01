@@ -1,0 +1,117 @@
+.pdf-style-selector-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+.pdf-style-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 2px solid #f3f4f6;
+  padding: 1.2rem 1rem;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pdf-style-card.selected {
+  border-color: #0074d9;
+  box-shadow: 0 6px 20px rgba(0,116,217,0.10);
+  transform: translateY(-3px) scale(1.03);
+}
+.pdf-style-card:hover {
+  border-color: #0074d9;
+}
+.pdf-style-preview {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.7rem;
+}
+.pdf-miniatura {
+  width: 90px;
+  height: 120px;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7px 5px 5px 5px;
+  position: relative;
+  overflow: hidden;
+}
+.pdf-miniatura .pdf-titulo {
+  width: 70%;
+  height: 13px;
+  background: #0074d9;
+  border-radius: 4px;
+  margin: 7px auto 5px auto;
+}
+.pdf-miniatura.moderno .pdf-linha {
+  width: 80%;
+  height: 3px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  margin: 0 auto 7px auto;
+}
+.pdf-miniatura .pdf-partes {
+  width: 80%;
+  height: 10px;
+  background: #b3d7f6;
+  border-radius: 3px;
+  margin: 0 auto 7px auto;
+}
+.pdf-miniatura .pdf-corpo {
+  width: 85%;
+  height: 38px;
+  background: #eaf6fd;
+  border-radius: 6px;
+  margin: 0 auto 7px auto;
+}
+.pdf-miniatura.moderno .pdf-rodape {
+  width: 60%;
+  height: 7px;
+  background: #dbeafe;
+  border-radius: 3px;
+  margin: 0 auto 0 auto;
+  position: absolute;
+  bottom: 8px;
+  left: 0; right: 0;
+}
+.pdf-miniatura.formal .pdf-titulo {
+  background: #222;
+  height: 11px;
+}
+.pdf-miniatura.formal .pdf-partes {
+  background: #bbb;
+  height: 8px;
+}
+.pdf-miniatura.formal .pdf-corpo {
+  background: #f3f4f6;
+  height: 40px;
+}
+.pdf-miniatura.formal .pdf-rodape {
+  width: 80%;
+  height: 6px;
+  background: #bbb;
+  border-radius: 3px;
+  margin: 0 auto 0 auto;
+  position: absolute;
+  bottom: 8px;
+  left: 0; right: 0;
+}
+.pdf-style-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+.pdf-style-desc {
+  color: #6b7280;
+  font-size: 0.95rem;
+  text-align: center;
+}

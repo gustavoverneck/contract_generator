@@ -1,0 +1,152 @@
+.contract-generator {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.contract-generator h2 {
+  margin-bottom: 1rem;
+  color: #0074d9;
+}
+
+.xml-editor {
+  width: 100%;
+  font-family: monospace;
+  font-size: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  min-height: 180px;
+  background: #f9fafb;
+}
+
+.xml-preview {
+  background: #f3f4f6;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.xml-preview pre {
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.contract-form {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 2.5rem 2.5rem;
+  max-width: 900px;
+  margin: 3rem auto;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  transition: box-shadow 0.2s;
+}
+.contract-form h2 {
+  color: #0074d9;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+.contract-form form {
+  margin-bottom: 2.5rem;
+}
+.contract-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+.contract-form select, .contract-form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.2rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.6rem;
+  font-size: 1.05rem;
+  background: #f9fafb;
+  transition: border 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.contract-form select:focus, .contract-form input:focus {
+  border-color: #0074d9;
+  box-shadow: 0 0 0 2px #e0f0ff;
+}
+.fields {
+  margin-bottom: 1.5rem;
+}
+.field {
+  margin-bottom: 1.2rem;
+}
+.contract-form button.btn-primary {
+  background: linear-gradient(90deg, #0074d9 60%, #00a8ff 100%);
+  color: #fff;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 0.6rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,116,217,0.10);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  margin-top: 0.5rem;
+}
+.contract-form button.btn-primary:hover {
+  background: linear-gradient(90deg, #005bb5 60%, #0074d9 100%);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(0,116,217,0.18);
+}
+.preview-area {
+  margin-bottom: 2.5rem;
+  background: #f3f4f6;
+  border-radius: 0.7rem;
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.preview-area h3 {
+  color: #0074d9;
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+.preview-area pre {
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+  white-space: pre-wrap;
+  background: none;
+}
+.pdf-area {
+  margin-top: 2.5rem;
+  background: #f9fafb;
+  border-radius: 0.7rem;
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pdf-area h3 {
+  color: #0074d9;
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+@media (max-width: 1000px) {
+  .contract-form, .preview-area, .pdf-area {
+    max-width: 98vw;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
