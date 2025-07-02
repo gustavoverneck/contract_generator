@@ -1,0 +1,115 @@
+/* Estilos globais para contratos (Times, margens, justificado, etc) */
+body {
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.8;
+    margin: 3cm 2.5cm;
+    color: #000000;
+    background: #ffffff;
+    text-align: justify;
+}
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 20px;
+}
+.title {
+    font-size: 18pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+.parties {
+    margin: 30px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+}
+.party {
+    margin-bottom: 12px;
+    font-weight: bold;
+    text-align: justify;
+    text-indent: 20px;
+}
+.content {
+    text-align: justify;
+    text-indent: 20px;
+    margin-top: 25px;
+}
+.intro-text {
+    margin-bottom: 30px;
+    font-weight: 500;
+    text-align: justify;
+    text-indent: 20px;
+}
+.clause {
+    margin-bottom: 25px;
+    page-break-inside: avoid;
+}
+.clause-title {
+    font-weight: bold;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #666;
+    padding-bottom: 5px;
+}
+.clause-content {
+    margin-left: 30px;
+    text-align: justify;
+    text-indent: 20px;
+    line-height: 1.8;
+}
+.signatures {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    page-break-inside: avoid;
+}
+.signature-block {
+    text-align: center;
+    width: 45%;
+    margin-top: 40px;
+}
+.signature-line {
+    border-bottom: 2px solid #000;
+    margin-bottom: 10px;
+    height: 40px;
+}
+.signature-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 11pt;
+}
+.signature-role {
+    font-size: 10pt;
+    font-style: italic;
+    color: #666;
+}
+.witnesses {
+    margin-top: 40px;
+    padding: 15px;
+    border-top: 1px solid #ccc;
+}
+.date-location {
+    margin-top: 40px;
+    text-align: center;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+.closing-text {
+    margin-top: 40px;
+    text-align: justify;
+    text-indent: 20px;
+    font-style: italic;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+@media print {
+    body { margin: 2cm 1.5cm; font-size: 11pt; }
+    .no-print { display: none; }
+    .clause { page-break-inside: avoid; }
+    .signatures { page-break-inside: avoid; }
+}

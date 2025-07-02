@@ -1,0 +1,77 @@
+<!-- Template: Venda de Produto -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Compra e Venda</title>
+    <link rel="stylesheet" href="../styles/contract.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Contrato de Compra e Venda</h1>
+    </div>
+    <div class="parties">
+        <div class="party"><strong>VENDEDOR:</strong> {{nomeRazao_vendedor}}, {{docType_vendedor}}: {{cpfCnpj_vendedor}}</div>
+        <div class="party"><strong>COMPRADOR:</strong> {{nomeRazao_comprador}}, {{docType_comprador}}: {{cpfCnpj_comprador}}</div>
+    </div>
+    <div class="content">
+        <p class="intro-text">Pelo presente instrumento particular, as partes acima qualificadas têm entre si justo e acordado o presente <strong>CONTRATO DE COMPRA E VENDA</strong>, que se regerá pelas cláusulas e condições seguintes:</p>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 1ª - DO OBJETO</div>
+            <div class="clause-content">
+                O VENDEDOR se compromete a vender ao COMPRADOR o seguinte bem: <strong>{{produto}}</strong>, que se encontra em perfeitas condições de uso e funcionamento, livre e desembaraçado de quaisquer ônus ou gravames.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 2ª - DO PREÇO E FORMA DE PAGAMENTO</div>
+            <div class="clause-content">
+                O preço total convencionado para a venda do bem é de <strong>{{valor}}</strong> (valor por extenso), que será pago pelo COMPRADOR mediante <strong>{{forma_pagamento}}</strong>, no ato da assinatura deste contrato e entrega do bem, conforme acordado na data de <strong>{{data}}</strong>.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 3ª - DA GARANTIA</div>
+            <div class="clause-content">
+                O VENDEDOR garante ao COMPRADOR o período de garantia de {{garantia}} meses contra defeitos de fabricação, contados a partir da data da entrega efetiva do bem.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 4ª - DA ENTREGA E TRANSFERÊNCIA</div>
+            <div class="clause-content">
+                A entrega do bem será realizada no ato da assinatura deste contrato e do pagamento integral do preço acordado. A partir deste momento, todos os riscos pela coisa vendida passam ao COMPRADOR.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 5ª - DAS DISPOSIÇÕES GERAIS</div>
+            <div class="clause-content">
+                {{descricao}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 6ª - DO FORO</div>
+            <div class="clause-content">
+                Fica eleito o foro da comarca de residência do COMPRADOR para dirimir quaisquer dúvidas ou questões oriundas do presente contrato, renunciando as partes a qualquer outro, por mais privilegiado que seja.
+            </div>
+        </div>
+        <div class="clausulas">
+            {{clausulas}}
+        </div>
+        <p class="closing-text">E por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor e forma, na presença de duas testemunhas.</p>
+    </div>
+    <div class="date-location">
+        <p>{{data}}</p>
+    </div>
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_vendedor}}</div>
+            <div class="signature-role">VENDEDOR</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_comprador}}</div>
+            <div class="signature-role">COMPRADOR</div>
+        </div>
+    </div>
+</body>
+</html>

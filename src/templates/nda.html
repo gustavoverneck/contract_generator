@@ -1,0 +1,96 @@
+<!-- Template: NDA (Acordo de Confidencialidade) -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acordo de Confidencialidade (NDA)</title>
+    <link rel="stylesheet" href="../styles/contract.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Acordo de Confidencialidade (NDA)</h1>
+    </div>
+    <div class="parties">
+        <div class="party"><strong>PARTE REVELADORA:</strong> {{nomeRazao_parte1}}, {{docType_parte1}}: {{cpfCnpj_parte1}}</div>
+        <div class="party"><strong>PARTE RECEPTORA:</strong> {{nomeRazao_parte2}}, {{docType_parte2}}: {{cpfCnpj_parte2}}</div>
+    </div>
+    <div class="content">
+        <p class="intro-text">Pelo presente instrumento particular, as partes acima qualificadas têm entre si justo e acordado o presente <strong>ACORDO DE CONFIDENCIALIDADE</strong>, doravante denominado simplesmente "Acordo", que se regerá pelas cláusulas e condições seguintes:</p>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 1ª - DO OBJETO E FINALIDADE</div>
+            <div class="clause-content">
+                As partes concordam em estabelecer um regime de confidencialidade mútua para troca de informações relacionadas a: <strong>{{assunto}}</strong>, com o objetivo de avaliação de possíveis negócios, parcerias ou colaborações futuras.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 2ª - DAS INFORMAÇÕES CONFIDENCIAIS</div>
+            <div class="clause-content">
+                Para fins deste Acordo, consideram-se "Informações Confidenciais" todos os dados, conhecimentos, informações técnicas, comerciais, estratégicas, financeiras, operacionais, bem como documentos, relatórios, projetos, processos, metodologias e demais informações de propriedade das partes.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 3ª - DO PRAZO DE CONFIDENCIALIDADE</div>
+            <div class="clause-content">
+                O prazo de confidencialidade será de <strong>{{prazo}} meses</strong>, contados a partir de <strong>{{data}}</strong>, permanecendo as obrigações de sigilo em vigor mesmo após o término deste prazo para informações que continuem sendo confidenciais.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 4ª - DAS OBRIGAÇÕES DAS PARTES</div>
+            <div class="clause-content">
+                As partes se comprometem a:
+                <ul>
+                    <li>Manter absoluto sigilo sobre todas as informações confidenciais recebidas;</li>
+                    <li>Não divulgar, reproduzir ou utilizar as informações para fins diversos do objeto deste Acordo;</li>
+                    <li>Limitar o acesso às informações apenas aos funcionários que necessitem conhecê-las;</li>
+                    <li>Adotar medidas de segurança adequadas para proteger as informações;</li>
+                    <li>Devolver ou destruir todas as informações ao término do Acordo, quando solicitado.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 5ª - DAS EXCEÇÕES</div>
+            <div class="clause-content">
+                Não se consideram confidenciais as informações que: a) sejam de domínio público; b) tenham sido desenvolvidas independentemente; c) sejam obtidas legitimamente de terceiros; d) devam ser reveladas por determinação legal ou judicial.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 6ª - DAS PENALIDADES</div>
+            <div class="clause-content">
+                O descumprimento das obrigações estabelecidas neste Acordo implicará na obrigação de indenizar a parte prejudicada por perdas e danos, lucros cessantes e danos morais, sem prejuízo de outras medidas legais cabíveis.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 7ª - DAS DISPOSIÇÕES GERAIS</div>
+            <div class="clause-content">
+                {{descricao}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 8ª - DO FORO</div>
+            <div class="clause-content">
+                Fica eleito o foro da comarca de comum acordo entre as partes para dirimir quaisquer dúvidas ou questões oriundas do presente Acordo, renunciando as partes a qualquer outro, por mais privilegiado que seja.
+            </div>
+        </div>
+        <div class="clausulas">
+            {{clausulas}}
+        </div>
+        <p class="closing-text">E por estarem assim justos e acordados, firmam o presente instrumento em duas vias de igual teor e forma, na presença de duas testemunhas.</p>
+    </div>
+    <div class="date-location">
+        <p>{{data}}</p>
+    </div>
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_parte1}}</div>
+            <div class="signature-role">PARTE REVELADORA</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_parte2}}</div>
+            <div class="signature-role">PARTE RECEPTORA</div>
+        </div>
+    </div>
+</body>
+</html>

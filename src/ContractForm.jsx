@@ -36,6 +36,10 @@ export default function ContractForm() {
   const [customTitle, setCustomTitle] = useState('');
   // Estado para alternância de tipo de pessoa por grupo
   const [cpfCnpjTypes, setCpfCnpjTypes] = useState({});
+  // Estado para testemunhas dinâmicas
+  const [testemunhas, setTestemunhas] = useState([{ id: 1, nome: '', identificacao: '' }]);
+  // Estado para mostrar aviso de testemunha obrigatória
+  const [testemunhaAviso, setTestemunhaAviso] = useState(false);
 
   const template = templates.find(t => t.id === selectedId);
   const isPersonalizado = selectedId === 'personalizado';
@@ -65,6 +69,7 @@ export default function ContractForm() {
     setClausulas([{ id: 1, texto: '' }]);
     setPdfUrl(null);
     setCustomTitle('');
+    setTestemunhas([{ id: 1, nome: '', identificacao: '' }]);
     // Inicializa o tipo de pessoa para cada grupo
     const grupos = getPessoaGroups(camposParaExibir);
     const novoCpfCnpjTypes = {};
@@ -131,6 +136,18 @@ export default function ContractForm() {
         delete campos['clausulas'];
       }
     }
+    // Testemunhas: monta string para o campo do template
+    if (camposParaExibir.some(c => c.nome === 'testemunhas')) {
+      const testemunhasTexto = testemunhas
+        .filter(t => t.nome.trim() && t.identificacao.trim())
+        .map((t, i) => `Testemunha ${i + 1}: ${t.nome} - ${t.identificacao}`)
+        .join('\n');
+      if (testemunhasTexto.trim()) {
+        campos['testemunhas'] = testemunhasTexto;
+      } else {
+        delete campos['testemunhas'];
+      }
+    }
     
     // Remove campos opcionais vazios para não exibi-los no PDF
     (camposParaExibir || []).forEach(c => {
@@ -154,14 +171,31 @@ export default function ContractForm() {
         delete campos[key];
       }
     });
-    // Geração do XML base para personalizado
-    let xml;
+    // Geração do HTML base
+    let html;
     if (isPersonalizado) {
-      xml = `<contrato>\n  <titulo>${customTitle || 'Contrato'}</titulo>\n` + camposParaExibir.map(c => `<${c.nome}>${campos[c.nome] || ''}</${c.nome}>`).join('\n') + '\n</contrato>';
+      html = `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>${customTitle || 'Contrato'}</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; margin: 2cm; }
+        .title { font-size: 16pt; font-weight: bold; text-align: center; margin-bottom: 30px; }
+        .field { margin-bottom: 15px; }
+        .field-label { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1 class="title">${customTitle || 'Contrato'}</h1>
+    ${camposParaExibir.map(c => `<div class="field"><span class="field-label">${c.label}:</span> ${campos[c.nome] || ''}</div>`).join('\n    ')}
+</body>
+</html>`;
     } else {
-      xml = TemplateService.fillTemplateXml(template.xmlBase, campos);
+      html = TemplateService.fillTemplateHtml(template.htmlBase, campos);
     }
-    const doc = PdfService.generatePdfFromXml(xml, pdfStyle);
+    const doc = PdfService.generatePdfFromHtml(html, pdfStyle);
     const pdfBlob = doc.output('blob');
     setPdfUrl(URL.createObjectURL(pdfBlob));
   }
@@ -221,48 +255,115 @@ export default function ContractForm() {
     }
   }
 
+  // Handlers para testemunhas dinâmicas
+  function handleTestemunhaChange(id, field, value) {
+    setTestemunhas(testemunhas.map(t => t.id === id ? { ...t, [field]: value } : t));
+  }
+  function addTestemunha() {
+    // Se algum campo da última testemunha estiver vazio, mostra aviso
+    if (testemunhas.some(t => !t.nome.trim() || !t.identificacao.trim())) {
+      setTestemunhaAviso(true);
+      return;
+    }
+    setTestemunhaAviso(false);
+    const novoId = Math.max(...testemunhas.map(t => t.id)) + 1;
+    setTestemunhas([...testemunhas, { id: novoId, nome: '', identificacao: '' }]);
+  }
+  function removeTestemunha(id) {
+    setTestemunhas(testemunhas.filter(t => t.id !== id));
+  }
+
   // Função para validar se todos os campos obrigatórios estão preenchidos
   function validarCamposObrigatorios() {
-    // Valida título para modo personalizado
-    if (isPersonalizado && (!customTitle || customTitle.trim() === '')) {
+    try {
+      // Verifica se o template e campos estão carregados
+      if (!template || !camposParaExibir || camposParaExibir.length === 0) {
+        return false;
+      }
+      
+      // Valida título para modo personalizado
+      if (isPersonalizado && (!customTitle || customTitle.trim() === '')) {
+        return false;
+      }
+      
+      // Obtém campos obrigatórios
+      const camposObrigatorios = camposParaExibir.filter(c => !c.opcional);
+      
+      // Se não há campos obrigatórios, considera válido
+      if (camposObrigatorios.length === 0) {
+        return true;
+      }
+      
+      // Verifica cada campo obrigatório
+      for (const campo of camposObrigatorios) {
+        const valor = fields[campo.nome];
+        if (!validarCampoIndividual(campo, valor)) {
+          return false;
+        }
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Erro na validação:', error);
       return false;
     }
-    
-    // Valida campos obrigatórios básicos
-    const camposObrigatorios = (camposParaExibir || []).filter(c => !c.opcional);
-    const campoBasicoInvalido = camposObrigatorios.some(campo => {
-      const valor = fields[campo.nome];
-      return !validarCampoIndividual(campo, valor);
-    });
-    
-    if (campoBasicoInvalido) return false;
-    
-    // Valida cláusulas obrigatórias
-    return validarClausulasObrigatorias();
   }
   
   function validarCampoIndividual(campo, valor) {
-    if (!valor || valor.trim() === '') return false;
-    
-    // Validação específica para datas
-    if (campo.tipo === 'date') {
-      return /^\d{2}\/\d{2}\/\d{4}$/.test(valor);
+    try {
+      // Se o valor não existe ou é vazio
+      if (!valor || typeof valor !== 'string' || valor.trim() === '') {
+        return false;
+      }
+      
+      const valorLimpo = valor.trim();
+      
+      // Validação específica para datas (formato DD/MM/YYYY)
+      if (campo.tipo === 'date') {
+        return /^\d{2}\/\d{2}\/\d{4}$/.test(valorLimpo);
+      }
+      
+      // Validação específica para CPF/CNPJ
+      if (campo.nome?.startsWith('cpfCnpj_')) {
+        const digits = valor.replace(/\D/g, '');
+        return digits.length >= 11; // CPF tem 11, CNPJ tem 14
+      }
+      
+      // Validação para valores monetários
+      if (campo.tipo === 'money' || campo.nome?.includes('valor')) {
+        // Verifica se tem pelo menos um dígito
+        return /\d/.test(valor);
+      }
+      
+      // Validação para campos select
+      if (campo.tipo === 'select') {
+        return valorLimpo !== '' && valorLimpo !== 'default';
+      }
+      
+      // Para outros tipos, apenas verifica se não está vazio
+      return valorLimpo.length > 0;
+    } catch (error) {
+      console.error('Erro validando campo individual:', error);
+      return false;
     }
-    
-    // Validação específica para CPF/CNPJ
-    if (campo.nome.startsWith('cpfCnpj_')) {
-      const digits = valor.replace(/\D/g, '');
-      return digits.length >= 11;
-    }
-    
-    return true;
   }
   
-  function validarClausulasObrigatorias() {
-    const campoClaususlas = camposParaExibir.find(c => c.nome === 'clausulas' && !c.opcional);
-    if (!campoClaususlas) return true;
-    
-    return clausulas.some(c => c.texto.trim() !== '');
+  // Função para detectar tipo de documento baseado no valor
+  function detectDocumentType(value) {
+    if (!value) return 'Documento';
+    const digits = value.replace(/\D/g, '');
+    if (digits.length <= 11) return 'CPF';
+    return 'CNPJ';
+  }
+
+  // Função para gerar label dinâmico para campos de CPF/CNPJ
+  function getDynamicLabel(campo, valor) {
+    if (campo.nome?.startsWith('cpfCnpj_') && campo.isDynamic) {
+      const baseLabel = campo.label.replace('Documento', '');
+      const docType = detectDocumentType(valor);
+      return `${docType}${baseLabel}`;
+    }
+    return campo.label;
   }
 
   return (
@@ -351,7 +452,7 @@ export default function ContractForm() {
               onChange: handleChange,
               required: obrigatorio,
               autoComplete: campo.tipo === 'email' ? 'email' : 'off',
-              placeholder: isCpfCnpj ? 'Digite o CPF ou CNPJ' : '',
+              placeholder: campo.exemplo || (isCpfCnpj ? 'Digite o CPF ou CNPJ' : ''),
             };
             // Adiciona maxLength apenas para campos que não são de data
             if (campo.tipo !== 'date') {
@@ -360,20 +461,19 @@ export default function ContractForm() {
             if (campo.tipo === 'number') inputProps.inputMode = 'numeric';
             if (campo.tipo === 'money') {
               inputProps.inputMode = 'decimal';
-              inputProps.placeholder = 'Ex: 1000,00';
+              inputProps.placeholder = campo.exemplo || 'Ex: 1000,00';
             }
             if (campo.tipo === 'date') {
               const currentValue = fields[campo.nome] || '';
-              
               return (
                 <div key={campo.nome} className="field">
-                  <label>{campo.label}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
+                  <label>{getDynamicLabel(campo, fields[campo.nome])}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
                   <input 
                     type="text"
                     name={campo.nome}
                     value={currentValue}
                     onChange={handleChange}
-                    placeholder="dd/mm/aaaa"
+                    placeholder={campo.exemplo || 'dd/mm/aaaa'}
                     maxLength={10}
                     required={obrigatorio}
                     autoComplete="off"
@@ -386,7 +486,7 @@ export default function ContractForm() {
             if (campo.tipo === 'clausulas') {
               return (
                 <div key={campo.nome} className="field">
-                  <label>{campo.label}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
+                  <label>{getDynamicLabel(campo, fields[campo.nome])}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
                   <div className="clausulas-container">
                     {clausulas.map((clausula, idx) => (
                       <div key={clausula.id} className="clausula-item">
@@ -413,9 +513,65 @@ export default function ContractForm() {
                       type="button" 
                       onClick={addClausula}
                       className="clausula-add-btn"
-                    >
-                      + Adicionar Cláusula
-                    </button>
+                      style={{marginTop:8}}
+                    >+ Adicionar Cláusula</button>
+                  </div>
+                </div>
+              );
+            }
+            
+            if (campo.nome === 'testemunhas') {
+              return (
+                <div key="testemunhas" className="field">
+                  <label>Testemunhas:</label>
+                  <div className="clausulas-container">
+                    {testemunhas.map((t, idx) => (
+                      <div key={t.id} className="clausula-item" style={{flexDirection:'column',alignItems:'stretch',gap:8}}>
+                        <label htmlFor={`testemunha_nome_${t.id}`} style={{fontWeight:'bold',marginBottom:2}}>Nome da Testemunha:</label>
+                        <input
+                          id={`testemunha_nome_${t.id}`}
+                          type="text"
+                          value={t.nome}
+                          onChange={e => handleTestemunhaChange(t.id, 'nome', e.target.value)}
+                          placeholder="Ex: Maria Oliveira"
+                          maxLength={80}
+                          className="input"
+                          style={{marginBottom:6}}
+                          required
+                        />
+                        <label htmlFor={`testemunha_id_${t.id}`} style={{fontWeight:'bold',marginBottom:2}}>Identificação (CPF ou RG):</label>
+                        <input
+                          id={`testemunha_id_${t.id}`}
+                          type="text"
+                          value={t.identificacao}
+                          onChange={e => handleTestemunhaChange(t.id, 'identificacao', e.target.value)}
+                          placeholder="Ex: 123.456.789-00 ou MG-12.345.678"
+                          maxLength={40}
+                          className="input"
+                          required
+                        />
+                        {testemunhas.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeTestemunha(t.id)}
+                            className="clausula-remove-btn"
+                            style={{alignSelf:'flex-end',marginTop:4}}
+                            title="Remover testemunha"
+                          >✕</button>
+                        )}
+                      </div>
+                    ))}
+                    {testemunhaAviso && (
+                      <div className="testemunha-aviso">
+                        Preencha nome e identificação para todas as testemunhas antes de adicionar outra.
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={addTestemunha}
+                      className="testemunha-add-btn"
+                      style={{marginTop:0}}
+                    >+ Adicionar Testemunha</button>
                   </div>
                 </div>
               );
@@ -424,7 +580,7 @@ export default function ContractForm() {
             if (campo.tipo === 'select') {
               return (
                 <div key={campo.nome} className="field">
-                  <label>{campo.label}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
+                  <label>{getDynamicLabel(campo, fields[campo.nome])}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
                   <select 
                     name={campo.nome}
                     value={fields[campo.nome] || ''}
@@ -444,8 +600,15 @@ export default function ContractForm() {
             
             return (
               <div key={campo.nome} className="field">
-                <label>{campo.label}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
-                <input {...inputProps} />
+                <label>{getDynamicLabel(campo, fields[campo.nome])}{obrigatorio && <span style={{color:'#d00',marginLeft:4}}>*</span>}:</label>
+                {campo.tipo === 'textarea' ? (
+                  <textarea
+                    {...inputProps}
+                    placeholder={campo.exemplo || ''}
+                  />
+                ) : (
+                  <input {...inputProps} />
+                )}
                 {!!maxLength && campo.tipo !== 'date' && <div style={{fontSize:'0.85em',color:'#888',textAlign:'right'}}>{(fields[campo.nome]||'').length}/{maxLength}</div>}
               </div>
             );
@@ -466,9 +629,8 @@ export default function ContractForm() {
         )}
         <button 
           type="button" 
-          className="btn btn-primary" 
+          className="btn-visualizar-contrato" 
           style={{
-            marginTop: '1rem',
             opacity: validarCamposObrigatorios() ? 1 : 0.6,
             cursor: validarCamposObrigatorios() ? 'pointer' : 'not-allowed'
           }} 

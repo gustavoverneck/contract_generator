@@ -1,0 +1,83 @@
+<!-- Template: Contrato de Parceria -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Parceria Comercial</title>
+    <link rel="stylesheet" href="../styles/contract.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Contrato de Parceria Comercial</h1>
+    </div>
+    <div class="parties">
+        <div class="party"><strong>PARCEIRO 1:</strong> {{nomeRazao_parceiro1}}, {{docType_parceiro1}}: {{cpfCnpj_parceiro1}}</div>
+        <div class="party"><strong>PARCEIRO 2:</strong> {{nomeRazao_parceiro2}}, {{docType_parceiro2}}: {{cpfCnpj_parceiro2}}</div>
+    </div>
+    <div class="content">
+        <p class="intro-text">Pelo presente instrumento particular, as partes acima qualificadas têm entre si justo e acordado o presente <strong>CONTRATO DE PARCERIA COMERCIAL</strong>, que se regerá pelas cláusulas e condições seguintes:</p>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 1ª - DO OBJETO</div>
+            <div class="clause-content">
+                As partes estabelecem entre si uma parceria comercial para desenvolvimento, execução e exploração do seguinte objeto: <strong>{{objeto}}</strong>, com vistas ao mútuo benefício e desenvolvimento de atividades comerciais conjuntas.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 2ª - DA PARTICIPAÇÃO E RESPONSABILIDADES</div>
+            <div class="clause-content">
+                A participação de cada parceiro será de <strong>{{percentual}}%</strong> para cada parte, sendo que todas as decisões relevantes deverão ser tomadas em conjunto e por consenso entre os parceiros.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 3ª - DO INÍCIO DA PARCERIA</div>
+            <div class="clause-content">
+                A parceria comercial terá início em <strong>{{data}}</strong>, permanecendo vigente por prazo indeterminado, podendo ser rescindida por qualquer das partes mediante aviso prévio de 30 (trinta) dias.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 4ª - DAS OBRIGAÇÕES GERAIS</div>
+            <div class="clause-content">
+                Cada parceiro se compromete a: a) agir com boa-fé e lealdade comercial; b) contribuir com seus conhecimentos e recursos conforme acordado; c) manter sigilo sobre informações comerciais sensíveis; d) buscar sempre o melhor resultado para a parceria.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 5ª - DA DIVISÃO DE RESULTADOS</div>
+            <div class="clause-content">
+                Os resultados financeiros obtidos pela parceria serão divididos proporcionalmente à participação de cada parceiro, conforme estabelecido na cláusula 2ª deste contrato.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 6ª - DAS DISPOSIÇÕES GERAIS</div>
+            <div class="clause-content">
+                {{descricao}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 7ª - DO FORO</div>
+            <div class="clause-content">
+                Fica eleito o foro da comarca de comum acordo entre as partes para dirimir quaisquer dúvidas ou questões oriundas do presente contrato, renunciando as partes a qualquer outro, por mais privilegiado que seja.
+            </div>
+        </div>
+        <div class="clausulas">
+            {{clausulas}}
+        </div>
+        <p class="closing-text">E por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor e forma, na presença de duas testemunhas.</p>
+    </div>
+    <div class="date-location">
+        <p>{{data}}</p>
+    </div>
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_parceiro1}}</div>
+            <div class="signature-role">PARCEIRO 1</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_parceiro2}}</div>
+            <div class="signature-role">PARCEIRO 2</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!-- Template: Contrato de Aluguel -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Locação</title>
+    <link rel="stylesheet" href="../styles/contract.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Contrato de Locação</h1>
+    </div>
+    <div class="parties">
+        <div class="party"><strong>LOCADOR:</strong> {{nomeRazao_locador}}, {{docType_locador}}: {{cpfCnpj_locador}}</div>
+        <div class="party"><strong>LOCATÁRIO:</strong> {{nomeRazao_locatario}}, {{docType_locatario}}: {{cpfCnpj_locatario}}</div>
+    </div>
+    <div class="content">
+        <p class="intro-text">Pelo presente instrumento particular, as partes acima qualificadas têm entre si justo e acordado o presente <strong>CONTRATO DE LOCAÇÃO</strong>, que se regerá pelas cláusulas e condições seguintes:</p>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 1ª - DO OBJETO</div>
+            <div class="clause-content">
+                O LOCADOR dá em locação ao LOCATÁRIO o imóvel situado em: <strong>{{imovel}}</strong>, que se encontra em perfeitas condições de habitabilidade e uso.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 2ª - DO VALOR DO ALUGUEL E FORMA DE PAGAMENTO</div>
+            <div class="clause-content">
+                O valor mensal do aluguel é de <strong>{{valor}}</strong> (valor por extenso), que será pago pelo LOCATÁRIO mediante <strong>{{forma_pagamento}}</strong>, sempre até o dia 10 (dez) de cada mês.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 3ª - DO PRAZO DE LOCAÇÃO</div>
+            <div class="clause-content">
+                O prazo de locação é de {{data_inicio}} até {{data_fim}}, podendo ser renovado por acordo entre as partes.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 4ª - DAS OBRIGAÇÕES DO LOCATÁRIO</div>
+            <div class="clause-content">
+                O LOCATÁRIO se obriga a: a) pagar pontualmente o aluguel; b) conservar o imóvel em bom estado; c) não sublocar sem autorização; d) devolver o imóvel nas mesmas condições em que o recebeu.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 5ª - DAS OBRIGAÇÕES DO LOCADOR</div>
+            <div class="clause-content">
+                O LOCADOR se obriga a: a) entregar o imóvel em perfeitas condições; b) garantir o uso pacífico do imóvel; c) arcar com as despesas de reparos estruturais; d) manter o imóvel livre de vícios ocultos.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 6ª - DAS DISPOSIÇÕES GERAIS</div>
+            <div class="clause-content">
+                {{descricao}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 7ª - DO FORO</div>
+            <div class="clause-content">
+                Fica eleito o foro da comarca onde se situa o imóvel para dirimir quaisquer dúvidas ou questões oriundas do presente contrato, renunciando as partes a qualquer outro, por mais privilegiado que seja.
+            </div>
+        </div>
+        <div class="clausulas">
+            {{clausulas}}
+        </div>
+        <p class="closing-text">E por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor e forma, na presença de duas testemunhas.</p>
+    </div>
+    <div class="date-location">
+        <p>{{data_inicio}}</p>
+    </div>
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_locador}}</div>
+            <div class="signature-role">LOCADOR</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_locatario}}</div>
+            <div class="signature-role">LOCATÁRIO</div>
+        </div>
+    </div>
+</body>
+</html>
