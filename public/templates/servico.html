@@ -1,0 +1,88 @@
+<!-- Template: Prestação de Serviços -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Prestação de Serviços</title>
+    <link rel="stylesheet" href="../styles/contract.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Contrato de Prestação de Serviços</h1>
+    </div>
+    <div class="parties">
+        <div class="party"><strong>CONTRATANTE:</strong> {{nomeRazao_contratante}}, {{docType_contratante}}: {{cpfCnpj_contratante}}</div>
+        <div class="party"><strong>CONTRATADO:</strong> {{nomeRazao_contratado}}, {{docType_contratado}}: {{cpfCnpj_contratado}}</div>
+    </div>
+    <div class="content">
+        <p class="intro-text">Pelo presente instrumento particular, as partes acima qualificadas têm entre si justo e acordado o presente <strong>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</strong>, que se regerá pelas cláusulas e condições seguintes:</p>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 1ª - DO OBJETO</div>
+            <div class="clause-content">
+                O CONTRATADO compromete-se a prestar ao CONTRATANTE o seguinte serviço: <strong>{{servico}}</strong>.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 2ª - DO VALOR E FORMA DE PAGAMENTO</div>
+            <div class="clause-content">
+                Pelo serviço ora contratado, o CONTRATANTE pagará ao CONTRATADO o valor total de <strong>{{valor}}</strong>, por <strong>{{forma_pagamento}}</strong>.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 3ª - DO PRAZO</div>
+            <div class="clause-content">
+                O presente contrato terá vigência a partir de <strong>{{data}}</strong>.<br>
+                Prazo de execução: {{prazo}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 4ª - DAS PENALIDADES</div>
+            <div class="clause-content">
+                Multa por descumprimento: {{multa}}%
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 5ª - DO REAJUSTE</div>
+            <div class="clause-content">
+                Reajuste anual pelo índice: {{reajuste}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 6ª - DAS DISPOSIÇÕES GERAIS</div>
+            <div class="clause-content">
+                {{descricao}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 7ª - DO FORO</div>
+            <div class="clause-content">
+                Fica eleito o foro da comarca de residência do CONTRATANTE para dirimir quaisquer dúvidas ou questões oriundas do presente contrato.
+            </div>
+        </div>
+        <div class="clausulas">
+            {{clausulas}}
+        </div>
+        <p style="margin-top: 30px;">E por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor.</p>
+    </div>
+    <div class="witnesses">
+        <strong>TESTEMUNHAS:</strong><br>
+        {{testemunhas}}
+    </div>
+    <div class="date-location">
+        <p>{{data}}</p>
+    </div>
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_contratante}}</div>
+            <div class="signature-role">CONTRATANTE</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_contratado}}</div>
+            <div class="signature-role">CONTRATADO</div>
+        </div>
+    </div>
+</body>
+</html>

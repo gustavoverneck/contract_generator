@@ -96,7 +96,7 @@ export default function ContractForm() {
     return grupos;
   }
 
-  function gerarPdfPreview(e) {
+  async function gerarPdfPreview(e) {
     e?.preventDefault();
     let campos = { ...fields };
     
@@ -193,7 +193,13 @@ export default function ContractForm() {
 </body>
 </html>`;
     } else {
-      html = TemplateService.fillTemplateHtml(template.htmlBase, campos);
+      try {
+        const templateHtml = await TemplateService.fetchTemplateHtml(template.id);
+        html = TemplateService.fillTemplateHtml(templateHtml, campos);
+      } catch (error) {
+        console.error('Erro ao carregar template HTML:', error);
+        html = '<p style="color:red">Erro ao carregar template. Tente novamente.</p>';
+      }
     }
     const doc = PdfService.generatePdfFromHtml(html, pdfStyle);
     const pdfBlob = doc.output('blob');

@@ -204,6 +204,12 @@ const TemplateService = {
   fetchTemplateHtml,
   // Preenche o HTML do template substituindo os campos
   fillTemplateHtml(htmlBase, campos) {
+    // Verifica se htmlBase é válido
+    if (!htmlBase || typeof htmlBase !== 'string') {
+      console.error('htmlBase inválido:', htmlBase);
+      return '<p style="color:red">Erro: Template HTML não encontrado.</p>';
+    }
+    
     let html = htmlBase;
     // Cria uma cópia dos campos para não modificar o original
     const camposFormatados = { ...campos };

@@ -1,0 +1,103 @@
+<!-- Template: Contrato de Estágio -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Estágio</title>
+    <link rel="stylesheet" href="../styles/contract.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Contrato de Estágio</h1>
+    </div>
+    <div class="parties">
+        <div class="party"><strong>EMPRESA CONCEDENTE:</strong> {{nomeRazao_empresa}}, {{docType_empresa}}: {{cpfCnpj_empresa}}</div>
+        <div class="party"><strong>ESTAGIÁRIO(A):</strong> {{nomeRazao_estagiario}}, {{docType_estagiario}}: {{cpfCnpj_estagiario}}</div>
+    </div>
+    <div class="content">
+        <p class="intro-text">Pelo presente instrumento particular, as partes acima qualificadas têm entre si justo e acordado o presente <strong>CONTRATO DE ESTÁGIO</strong>, que se regerá pelas cláusulas e condições seguintes:</p>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 1ª - DO OBJETO</div>
+            <div class="clause-content">
+                A EMPRESA CONCEDENTE oferece ao ESTAGIÁRIO oportunidade de estágio curricular relacionado ao curso de <strong>{{curso}}</strong>, com o objetivo de proporcionar experiência prática e complementação do ensino e aprendizagem.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 2ª - DA BOLSA-AUXÍLIO</div>
+            <div class="clause-content">
+                O valor da bolsa-auxílio será de <strong>{{valor_bolsa}}</strong> (valor por extenso) mensais, que será pago pelo meio de <strong>{{forma_pagamento}}</strong>, sempre até o dia 5 (cinco) de cada mês subsequente.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 3ª - DO PRAZO E JORNADA</div>
+            <div class="clause-content">
+                O estágio terá duração de <strong>{{data_inicio}}</strong> até <strong>{{data_fim}}</strong>, podendo ser prorrogado por acordo entre as partes, respeitando-se o limite máximo de 2 (dois) anos na mesma empresa.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 4ª - DAS OBRIGAÇÕES DO ESTAGIÁRIO</div>
+            <div class="clause-content">
+                O ESTAGIÁRIO se compromete a:
+                <ul>
+                    <li>Cumprir rigorosamente a carga horária e o cronograma estabelecido;</li>
+                    <li>Seguir as normas internas, regulamentos e políticas da empresa;</li>
+                    <li>Manter sigilo absoluto sobre informações confidenciais da empresa;</li>
+                    <li>Participar ativamente das atividades propostas pelo supervisor de estágio;</li>
+                    <li>Elaborar relatórios periódicos sobre as atividades desenvolvidas.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 5ª - DAS OBRIGAÇÕES DA EMPRESA</div>
+            <div class="clause-content">
+                A EMPRESA CONCEDENTE se compromete a:
+                <ul>
+                    <li>Proporcionar experiência prática correlata com a área de formação do estagiário;</li>
+                    <li>Designar supervisor qualificado para acompanhar e orientar o estagiário;</li>
+                    <li>Pagar pontualmente a bolsa-auxílio convencionada;</li>
+                    <li>Fornecer certificado de conclusão de estágio ao final do período;</li>
+                    <li>Oferecer ambiente seguro e adequado para o desenvolvimento das atividades.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 6ª - DA RESCISÃO</div>
+            <div class="clause-content">
+                O presente contrato poderá ser rescindido a qualquer tempo, por qualquer das partes, mediante comunicação prévia de 10 (dez) dias, sem que haja direito a indenização de qualquer natureza.
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 7ª - DAS DISPOSIÇÕES GERAIS</div>
+            <div class="clause-content">
+                {{descricao}}
+            </div>
+        </div>
+        <div class="clause">
+            <div class="clause-title">CLÁUSULA 8ª - DO FORO</div>
+            <div class="clause-content">
+                Fica eleito o foro onde se situa a empresa para dirimir quaisquer dúvidas ou questões oriundas do presente contrato, renunciando as partes a qualquer outro, por mais privilegiado que seja.
+            </div>
+        </div>
+        <div class="clausulas">
+            {{clausulas}}
+        </div>
+        <p class="closing-text">E por estarem assim justos e contratados, firmam o presente instrumento em duas vias de igual teor e forma, na presença de duas testemunhas.</p>
+    </div>
+    <div class="date-location">
+        <p>{{data_inicio}}</p>
+    </div>
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_empresa}}</div>
+            <div class="signature-role">EMPRESA CONCEDENTE</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line"></div>
+            <div class="signature-name">{{nomeRazao_estagiario}}</div>
+            <div class="signature-role">ESTAGIÁRIO(A)</div>
+        </div>
+    </div>
+</body>
+</html>
